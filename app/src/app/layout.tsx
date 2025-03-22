@@ -5,6 +5,7 @@ import "./globals.css";
 import Nav from '@/_components/nav';
 import { geistMono, geistSans, metadata } from "@/_components/data";
 import { ReactNode } from "react";
+import { usePathname } from 'next/navigation'
 
 export default function RootLayout({
   children,
@@ -28,14 +29,18 @@ export default function RootLayout({
 
 function MainLayout({ children }: { children: ReactNode }) {
   const { component } = useRootLayoutContext();
+  const pathname = usePathname();
 
   return (
     <>
-      <header className="bg-white shadow-sm">
+
+      {(pathname !== '/' && pathname !== '' ) && (
+        <header className="bg-white shadow-sm">
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-              {component}
+            {component}
           </div>
-      </header>
+        </header>
+      )}
       <main>
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
               {children}

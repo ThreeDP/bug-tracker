@@ -1,9 +1,12 @@
 "user client"
 
+import LoginForm from "@/_components/_forms/loginForm";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <h1 className="w-full">Hello World!</h1>
+    <>
+      <LoginForm/>
+    </>
   );
 }

@@ -38,13 +38,13 @@ function classNames(...classes: (string | undefined | null)[]): string {
 
 const NavIcon: React.FC = () => {
     return (
-        <div className="flex shrink-0 items-center">
+        <Link  href='/' className="flex shrink-0 items-center">
             <img
             alt="Bug Tracker"
             src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=emerald&shade=400"
             className="h-8 w-auto"
             />
-        </div>
+        </Link>
     );
 }
 
@@ -59,7 +59,7 @@ const NavItems: React.FC<NavigationItemProps> = ({ navigation }) => {
                 href={item.href}
                 // aria-current={item.current ? 'page' : undefined}
                 className={classNames(
-                    item.href.startsWith(currentPath) ? `bg-gray-900 ${DesignSystem.textPrimary}` : `text-gray-800 hover:bg-gray-400 hover:${DesignSystem.textPrimary}`,
+                    currentPath.startsWith(item.href) ? `bg-gray-900 ${DesignSystem.textPrimary}` : `text-gray-800 hover:bg-gray-400 hover:${DesignSystem.textPrimary}`,
                     'flex items-center rounded-md px-3 py-2 text-sm font-medium',
                 )}
                 >
