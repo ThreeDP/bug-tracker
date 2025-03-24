@@ -1,5 +1,7 @@
 package com.ifsp.bugtracker.data.entities;
 
+import java.util.UUID;
+
 import com.ifsp.bugtracker.data.enums.IssueStatus;
 
 import jakarta.persistence.Column;
@@ -23,6 +25,20 @@ public class Issue extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    private Issue(){}
+
+    public Issue(
+        String title,
+        String description,
+        User user) {
+        this.id = UUID.randomUUID();
+        this.title = title;
+        this.description = description;
+        this.user = user;
+        this.status = IssueStatus.New;
+        this.createdBy = user.id.toString();
+    }
 
     public String getTitle() {
         return this.title;

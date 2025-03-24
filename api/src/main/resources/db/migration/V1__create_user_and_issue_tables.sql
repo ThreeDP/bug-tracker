@@ -1,5 +1,5 @@
 -- Create the "user" table
-CREATE TABLE "user" (
+CREATE TABLE "user_account" (
     id UUID PRIMARY KEY,            -- Unique ID for the user
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Creation timestamp
     created_by VARCHAR(255),        -- User who created the record
@@ -21,5 +21,5 @@ CREATE TABLE issue (
     description TEXT,               -- Description of the issue
     status VARCHAR(50),             -- Status of the issue (ENUM stored as string)
     user_id UUID NOT NULL,          -- Foreign key referencing the "user" table
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "user" (id) ON DELETE CASCADE
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "user_account" (id) ON DELETE CASCADE
 );
