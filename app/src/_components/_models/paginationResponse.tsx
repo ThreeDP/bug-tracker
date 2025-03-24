@@ -6,7 +6,7 @@ interface PaginationResponse<T> {
     hasNextPage: boolean;
     hasPreviousPage: boolean;
     totalPages: number;
-    Data:  Iterable<T>;
+    content:  Iterable<T>;
 }
 
 export type { PaginationResponse };

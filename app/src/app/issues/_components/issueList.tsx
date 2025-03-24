@@ -4,6 +4,7 @@ import { CheckCircleIcon, XCircleIcon, ClockIcon, ExclamationCircleIcon, Documen
 
 export interface OwnerResponse {
     name: string,
+    email: string | null,
     pictureUrl: string
 }
 

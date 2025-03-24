@@ -14,6 +14,9 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import com.ifsp.bugtracker.controllers.dtos.CreateIssueRequestDTO;
+import com.ifsp.bugtracker.controllers.dtos.IssueItemResponseDTO;
+import com.ifsp.bugtracker.controllers.dtos.PaginationResponseDTO;
+import com.ifsp.bugtracker.controllers.dtos.UserItemResponseDTO;
 import com.ifsp.bugtracker.data.entities.Issue;
 import com.ifsp.bugtracker.data.entities.User;
 import com.ifsp.bugtracker.repositories.IssueRepository;
@@ -42,12 +45,27 @@ public class IssueController {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<Issue>> GetIssues(
+    public ResponseEntity<PaginationResponseDTO<IssueItemResponseDTO>> GetIssues(
         @RequestParam(defaultValue = "0") @Min(0) Integer page,
         @RequestParam(defaultValue = "5") @Min(1) @Max(10) Integer size
     ) {
         Pageable pageRequest = PageRequest.of(page, size);
-        return ResponseEntity.ok(issueRepository.findAll(pageRequest));
+        Page<Issue> issuePage = issueRepository.findAll(pageRequest);
+        PaginationResponseDTO<IssueItemResponseDTO> response = PaginationResponseDTO.map(
+            issuePage,
+            issue -> new IssueItemResponseDTO(
+                issue.getTitle(),
+                issue.getDescription(),
+                issue.getCreatedAt(),
+                issue.getId().toString(),
+                new UserItemResponseDTO(
+                    issue.getUser().getName(),
+                    issue.getUser().getPictureUrl(),
+                    issue.getUser().getEmail()),
+                issue.getIssueStatus()
+            )
+        );
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")

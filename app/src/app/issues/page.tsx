@@ -55,7 +55,7 @@ const paginationTest: PaginationResponse<IssueResponse> = {
     hasNextPage: true,
     hasPreviousPage: true,
     totalPages: 3,
-    Data: IssueListTest
+    content: IssueListTest
 }
 
 export default function Page() {

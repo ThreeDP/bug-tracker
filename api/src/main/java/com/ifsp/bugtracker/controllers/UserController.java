@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ifsp.bugtracker.controllers.dtos.CreateUserRequestDTO;
+import com.ifsp.bugtracker.controllers.dtos.PaginationResponseDTO;
+import com.ifsp.bugtracker.controllers.dtos.UserItemResponseDTO;
 import com.ifsp.bugtracker.data.entities.User;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,12 +51,21 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<User>> getMethodName(
+    public ResponseEntity<PaginationResponseDTO<UserItemResponseDTO>> GetAllUsers(
         @RequestParam(defaultValue = "0") @Min(0) Integer page,
         @RequestParam(defaultValue = "5") @Min(1) @Max(10) Integer size
     ) {
         Pageable pageRequest = PageRequest.of(page, size);
-        return ResponseEntity.ok(userRepository.findAll(pageRequest));
+        Page<User> userPage = userRepository.findAll(pageRequest);
+        PaginationResponseDTO<UserItemResponseDTO> response = PaginationResponseDTO.map(
+            userPage,
+            user -> new UserItemResponseDTO(
+                user.getName(),
+                user.getEmail(),
+                user.getPictureUrl()
+            )
+        );
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/:create")

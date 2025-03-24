@@ -21,7 +21,7 @@ const paginationTest: PaginationResponse<UserResponse> = {
     hasNextPage: true,
     hasPreviousPage: true,
     totalPages: 3,
-    Data: UserListR
+    content: UserListR
 }
 
 export default function Page() {
