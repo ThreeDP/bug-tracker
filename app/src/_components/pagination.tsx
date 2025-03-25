@@ -11,12 +11,14 @@ function Pagination<T>({
 }: {
     children: React.ReactNode
     handlerPagination: (event: React.MouseEvent<HTMLButtonElement>) => void
-    pagination: PaginationResponse<T>,
+    pagination: PaginationResponse<T> | null,
     className: string
 }) {
     const currentBtn: string = "z-10 bg-indigo-600 text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600";
     const defaultBtn: string = "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0";
-
+    if (pagination == null) {
+        return (<p></p>);
+    }
     return (
     <section className={`max-w-[450px] mx-auto shadow-lg rounded-lg px-5 py-3 ${className}`}>
         {children}

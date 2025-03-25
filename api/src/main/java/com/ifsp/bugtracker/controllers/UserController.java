@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ifsp.bugtracker.repositories.UserRepository;
+import com.ifsp.bugtracker.services.AuthService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.ifsp.bugtracker.controllers.dtos.CreateUserRequestDTO;
 import com.ifsp.bugtracker.controllers.dtos.PaginationResponseDTO;
 import com.ifsp.bugtracker.controllers.dtos.UserItemResponseDTO;
+import com.ifsp.bugtracker.data.entities.User;
 import com.ifsp.bugtracker.data.entities.User;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +62,7 @@ public class UserController {
         PaginationResponseDTO<UserItemResponseDTO> response = PaginationResponseDTO.map(
             userPage,
             user -> new UserItemResponseDTO(
+                user.getId(),
                 user.getName(),
                 user.getEmail(),
                 user.getPictureUrl()
@@ -67,12 +70,4 @@ public class UserController {
         );
         return ResponseEntity.ok(response);
     }
-
-    @PostMapping("/:create")
-    public ResponseEntity<Void> postMethodName(@RequestBody CreateUserRequestDTO request) {
-        User user = new User(request.name(), request.email());
-        userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-    
 }

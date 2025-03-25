@@ -44,7 +44,7 @@ public class IssueController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping()
+    @GetMapping("/")
     public ResponseEntity<PaginationResponseDTO<IssueItemResponseDTO>> GetIssues(
         @RequestParam(defaultValue = "0") @Min(0) Integer page,
         @RequestParam(defaultValue = "5") @Min(1) @Max(10) Integer size
@@ -59,6 +59,7 @@ public class IssueController {
                 issue.getCreatedAt(),
                 issue.getId().toString(),
                 new UserItemResponseDTO(
+                    issue.getUser().getId(),
                     issue.getUser().getName(),
                     issue.getUser().getPictureUrl(),
                     issue.getUser().getEmail()),

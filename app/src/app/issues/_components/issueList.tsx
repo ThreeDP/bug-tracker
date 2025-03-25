@@ -62,12 +62,14 @@ export const IssueItem = ({ issue }:
             <p className="mt-1 truncate text-xs/5 text-gray-500">{issue.description}</p>
         </div>
     </li>
-    );    
+    );
 }
 
-export const IssueList = ({ issues }: 
-{ issues: IssueResponse[] }) => {
-    
+export const IssueList = ({ issues }:
+{ issues: IssueResponse[] | null }) => {
+
+    if (issues == null)
+        return (<h1>loading...</h1>);
     return (
         <ul role="list" className="divide-y divide-gray-100">
             {issues.map((issue) => (
